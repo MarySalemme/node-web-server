@@ -3,23 +3,28 @@ const hbs = require('hbs');
 
 const app = express();
 
+// setting up partials
+hbs.registerPartials(__dirname + '/views/partials');
+
 app.set('view engine', 'hbs');
 // express middleware: lets you configure hou your application will work 
 app.use(express.static(__dirname + '/public'));
+
+hbs.registerHelper('getCurrentYear', () => {
+   return new Date().getFullYear();
+});
 
 // http route handler
 app.get('/', (req, res) => {
    res.render('home.hbs', {
       pageTitle: 'Home Page',
       welcomeMessage: 'Welcome to this page',
-      currentYear: new Date().getFullYear()
    })
 });
 
 app.get('/about', (req, res) => {
    res.render('about.hbs', {
       pageTitle: 'About Page',
-      currentYear: new Date().getFullYear()
    });
 });
 
